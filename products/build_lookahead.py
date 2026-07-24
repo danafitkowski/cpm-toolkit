@@ -125,8 +125,9 @@ for i, val in enumerate(example, start=1):
     cell.font = Font(name=FONT, size=10, color=BLUE_INPUT)
     cell.border = border
     cell.alignment = Alignment(vertical="center", wrap_text=(i in (2, 13, 14, 17)))
-# Days Remaining formula (column P = 16)
-ws.cell(row=ex_row, column=16, value="=F6-TODAY()")
+# Days Remaining formula (column P = 16), guarded so a blank Planned Finish
+# doesn't show a huge negative day count (0 - TODAY() as a serial number).
+ws.cell(row=ex_row, column=16, value=f"=IF(F{ex_row}<>\"\",F{ex_row}-TODAY(),\"\")")
 ws.cell(row=ex_row, column=16).font = Font(name=FONT, size=10, color="000000")
 ws.cell(row=ex_row, column=16).number_format = "0"
 ws.cell(row=ex_row, column=16).border = border
@@ -143,7 +144,7 @@ for r in range(7, 31):
             cell.fill = PatternFill("solid", fgColor=LIGHT)
     ws.cell(row=r, column=5).number_format = "mmm d, yyyy"
     ws.cell(row=r, column=6).number_format = "mmm d, yyyy"
-    p = ws.cell(row=r, column=16, value=f"=F{r}-TODAY()")
+    p = ws.cell(row=r, column=16, value=f"=IF(F{r}<>\"\",F{r}-TODAY(),\"\")")
     p.number_format = "0"
 
 ws.freeze_panes = "A5"

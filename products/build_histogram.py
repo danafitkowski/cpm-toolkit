@@ -103,9 +103,9 @@ for name, vals in examples:
         c.border = border
     first_l = ws.cell(row=r, column=week_cols[0]).column_letter
     last_l = ws.cell(row=r, column=week_cols[-1]).column_letter
-    pk = ws.cell(row=r, column=peak_col, value=f"=MAX({first_l}{r}:{last_l}{r})")
+    pk = ws.cell(row=r, column=peak_col, value=f"=IF(COUNT({first_l}{r}:{last_l}{r})=0,\"\",MAX({first_l}{r}:{last_l}{r}))")
     pk.border = border; pk.alignment = Alignment(horizontal="center")
-    av = ws.cell(row=r, column=avg_col, value=f"=AVERAGE({first_l}{r}:{last_l}{r})")
+    av = ws.cell(row=r, column=avg_col, value=f"=IF(COUNT({first_l}{r}:{last_l}{r})=0,\"\",AVERAGE({first_l}{r}:{last_l}{r}))")
     av.border = border; av.alignment = Alignment(horizontal="center"); av.number_format = "0.0"
     r += 1
 
@@ -120,9 +120,11 @@ for r in range(blank_start, blank_start + 10):
         c.alignment = Alignment(horizontal="center")
     first_l = ws.cell(row=r, column=week_cols[0]).column_letter
     last_l = ws.cell(row=r, column=week_cols[-1]).column_letter
-    pk = ws.cell(row=r, column=peak_col, value=f"=MAX({first_l}{r}:{last_l}{r})")
+    # Guarded with COUNT so a blank row shows a blank Peak/Average instead of
+    # 0 / #DIV!0 (AVERAGE errors on a range with no numbers at all).
+    pk = ws.cell(row=r, column=peak_col, value=f"=IF(COUNT({first_l}{r}:{last_l}{r})=0,\"\",MAX({first_l}{r}:{last_l}{r}))")
     pk.border = border; pk.alignment = Alignment(horizontal="center")
-    av = ws.cell(row=r, column=avg_col, value=f"=AVERAGE({first_l}{r}:{last_l}{r})")
+    av = ws.cell(row=r, column=avg_col, value=f"=IF(COUNT({first_l}{r}:{last_l}{r})=0,\"\",AVERAGE({first_l}{r}:{last_l}{r}))")
     av.border = border; av.alignment = Alignment(horizontal="center"); av.number_format = "0.0"
     if (r % 2) == 0:
         for col in range(1, avg_col + 1):
