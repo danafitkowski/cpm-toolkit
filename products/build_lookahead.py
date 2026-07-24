@@ -1,4 +1,5 @@
 """Builds '3-Week Lookahead Starter Template.xlsx': a blank, generic field lookahead."""
+from datetime import date
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
@@ -116,7 +117,7 @@ ws.merge_cells("A5:Q5")
 
 ex_row = 6
 example = ["A1010", "Form and pour footings - Grid A-C", "Area 2", "J. Smith",
-           "2026-08-03", "2026-08-07", "x", "x", "x", "", "", "",
+           date(2026, 8, 3), date(2026, 8, 7), "x", "x", "x", "", "", "",
            "Strip forms, begin backfill", "Set anchor bolts", "Concrete cure 3 days (FS+3)",
            None, "Inspector booked for Fri AM"]
 for i, val in enumerate(example, start=1):
