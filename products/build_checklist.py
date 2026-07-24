@@ -83,5 +83,31 @@ ws.cell(row=sum_row, column=3, value=f'=COUNTIF(D5:D{last_row},"Pass")&" of "&CO
 ws.cell(row=sum_row + 1, column=2, value="Flagged:").font = Font(name=FONT, size=10, bold=True)
 ws.cell(row=sum_row + 1, column=3, value=f'=COUNTIF(D5:D{last_row},"Flag")').font = Font(name=FONT, size=10)
 
+# ---- Professional polish ----
+wb.properties.creator = "CPM Toolkit"
+wb.properties.title = "Schedule Health Checklist"
+wb.properties.subject = "DCMA-14-style manual schedule review checklist"
+wb.properties.company = "CPM Toolkit"
+
+foot_row = sum_row + 3
+ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=5)
+foot = ws.cell(row=foot_row, column=1, value="CPM Toolkit  |  Schedule Health Checklist  |  v1.0")
+foot.font = Font(name=FONT, size=8, italic=True, color="33415C")
+for c in range(1, 6):
+    ws.cell(row=foot_row, column=c).border = Border(top=Side(style="thin", color="DDE3EA"))
+
+ws.sheet_properties.tabColor = TEAL
+
+ws.page_setup.orientation = "portrait"
+ws.page_setup.fitToWidth = 1
+ws.page_setup.fitToHeight = 0
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+ws.print_title_rows = "4:4"
+ws.page_margins.left = 0.4
+ws.page_margins.right = 0.4
+ws.page_margins.top = 0.5
+ws.page_margins.bottom = 0.5
+ws.print_options.horizontalCentered = True
+
 wb.save("Schedule Health Checklist.xlsx")
 print("saved, last_row", last_row)

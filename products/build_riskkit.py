@@ -158,5 +158,30 @@ ws.cell(row=r5, column=3).number_format = "0.0"
 
 ws.freeze_panes = "A5"
 
+# ---- Professional polish ----
+wb.properties.creator = "CPM Toolkit"
+wb.properties.title = "Schedule Risk & Contingency Starter Kit"
+wb.properties.subject = "3-point (PERT) risk register with P50/P80/P90 contingency"
+wb.properties.company = "CPM Toolkit"
+
+foot_row = r5 + 2
+ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=8)
+foot = ws.cell(row=foot_row, column=1, value="CPM Toolkit  |  Schedule Risk & Contingency Starter Kit  |  v1.0")
+foot.font = Font(name=FONT, size=8, italic=True, color="33415C")
+
+ws.sheet_properties.tabColor = TEAL
+ins.sheet_properties.tabColor = NAVY
+
+ws.page_setup.orientation = "landscape"
+ws.page_setup.fitToWidth = 1
+ws.page_setup.fitToHeight = 0
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+ws.print_title_rows = f"{header_row}:{header_row}"
+ws.page_margins.left = 0.4
+ws.page_margins.right = 0.4
+ws.page_margins.top = 0.5
+ws.page_margins.bottom = 0.5
+ws.print_options.horizontalCentered = True
+
 wb.save("Schedule Risk & Contingency Starter Kit.xlsx")
 print("saved, data rows", ex_row, "..", data_last_row, "summary at", label_row)

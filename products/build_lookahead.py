@@ -148,5 +148,32 @@ for r in range(7, 31):
 
 ws.freeze_panes = "A5"
 
+# ---- Professional polish ----
+wb.properties.creator = "CPM Toolkit"
+wb.properties.title = "3-Week Lookahead Starter Template"
+wb.properties.subject = "Blank, editable 3-week look-ahead schedule template"
+wb.properties.company = "CPM Toolkit"
+
+foot_row = 32
+ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=17)
+foot = ws.cell(row=foot_row, column=1, value="CPM Toolkit  |  3-Week Lookahead Starter Template  |  v1.0")
+foot.font = Font(name=FONT, size=8, italic=True, color="33415C")
+for c in range(1, 18):
+    ws.cell(row=foot_row, column=c).border = Border(top=Side(style="thin", color="DDE3EA"))
+
+ws.sheet_properties.tabColor = TEAL
+ins.sheet_properties.tabColor = NAVY
+
+ws.page_setup.orientation = "landscape"
+ws.page_setup.fitToWidth = 1
+ws.page_setup.fitToHeight = 0
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+ws.print_title_rows = "3:4"
+ws.page_margins.left = 0.35
+ws.page_margins.right = 0.35
+ws.page_margins.top = 0.5
+ws.page_margins.bottom = 0.5
+ws.print_options.horizontalCentered = True
+
 wb.save("3-Week Lookahead Starter Template.xlsx")
 print("saved")

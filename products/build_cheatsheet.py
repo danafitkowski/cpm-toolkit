@@ -2,7 +2,7 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_LEFT
 
@@ -53,14 +53,29 @@ TABLES = [
     ]),
 ]
 
+def draw_footer(canvas, doc):
+    canvas.saveState()
+    canvas.setStrokeColor(LINE)
+    canvas.setLineWidth(0.6)
+    y = 0.62 * inch
+    canvas.line(0.6 * inch, y, letter[0] - 0.6 * inch, y)
+    canvas.setFont("Helvetica-Oblique", 7.6)
+    canvas.setFillColor(INKSOFT)
+    canvas.drawString(0.6 * inch, y - 14, "CPM Toolkit  |  XER Field Reference Sheet  |  v1.0")
+    canvas.drawRightString(letter[0] - 0.6 * inch, y - 14, f"Page {doc.page}")
+    canvas.restoreState()
+
+
 def build():
     doc = SimpleDocTemplate(
         "XER Field Reference Sheet.pdf", pagesize=letter,
         leftMargin=0.6 * inch, rightMargin=0.6 * inch,
-        topMargin=0.55 * inch, bottomMargin=0.5 * inch,
+        topMargin=0.55 * inch, bottomMargin=0.85 * inch,
+        title="XER Field Reference Sheet", author="CPM Toolkit", subject="Primavera P6 XER table and field reference",
     )
     story = []
     story.append(Paragraph("XER Field Reference", title_style))
+    story.append(HRFlowable(width="100%", thickness=1.6, color=TEAL, spaceBefore=2, spaceAfter=8, lineCap="round"))
     story.append(Paragraph(
         "The tables and fields people actually script against, in plain English. "
         "A .xer file is plain text: a header line, then repeating %T (table) / %F (fields) / %R (record) blocks, tab-separated.",
@@ -94,7 +109,7 @@ def build():
         "Every value in a .xer file is a plain string; date and number parsing is the caller's job.",
         foot_style))
 
-    doc.build(story)
+    doc.build(story, onFirstPage=draw_footer, onLaterPages=draw_footer)
 
 if __name__ == "__main__":
     build()

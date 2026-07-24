@@ -173,5 +173,30 @@ chart.add_data(data, titles_from_data=True, from_rows=True)
 chart.set_categories(cats)
 ws.add_chart(chart, f"A{total_row + 3}")
 
+# ---- Professional polish ----
+wb.properties.creator = "CPM Toolkit"
+wb.properties.title = "Resource Histogram Starter"
+wb.properties.subject = "Weekly trade-loading grid with built-in stacked chart"
+wb.properties.company = "CPM Toolkit"
+
+foot_row = total_row + 1
+ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=avg_col)
+foot = ws.cell(row=foot_row, column=1, value="CPM Toolkit  |  Resource Histogram Starter  |  v1.0")
+foot.font = Font(name=FONT, size=8, italic=True, color="33415C")
+
+ws.sheet_properties.tabColor = TEAL
+ins.sheet_properties.tabColor = NAVY
+
+ws.page_setup.orientation = "landscape"
+ws.page_setup.fitToWidth = 1
+ws.page_setup.fitToHeight = 0
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+ws.print_title_rows = f"{header_row}:{header_row}"
+ws.page_margins.left = 0.35
+ws.page_margins.right = 0.35
+ws.page_margins.top = 0.5
+ws.page_margins.bottom = 0.5
+ws.print_options.horizontalCentered = True
+
 wb.save("Resource Histogram Starter.xlsx")
 print("saved, data rows 5..", data_last_row, "total row", total_row)

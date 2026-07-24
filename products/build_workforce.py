@@ -126,5 +126,30 @@ chart.add_data(data, titles_from_data=True)
 chart.set_categories(cats)
 ws.add_chart(chart, f"A{sum_row + 4}")
 
+# ---- Professional polish ----
+wb.properties.creator = "CPM Toolkit"
+wb.properties.title = "Workforce Plan Template"
+wb.properties.subject = "Mobilize / peak / demobilize workforce planning by trade"
+wb.properties.company = "CPM Toolkit"
+
+foot_row = sum_row + 3
+ws.merge_cells(start_row=foot_row, start_column=1, end_row=foot_row, end_column=8)
+foot = ws.cell(row=foot_row, column=1, value="CPM Toolkit  |  Workforce Plan Template  |  v1.0")
+foot.font = Font(name=FONT, size=8, italic=True, color="33415C")
+
+ws.sheet_properties.tabColor = TEAL
+ins.sheet_properties.tabColor = NAVY
+
+ws.page_setup.orientation = "landscape"
+ws.page_setup.fitToWidth = 1
+ws.page_setup.fitToHeight = 0
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+ws.print_title_rows = f"{header_row}:{header_row}"
+ws.page_margins.left = 0.4
+ws.page_margins.right = 0.4
+ws.page_margins.top = 0.5
+ws.page_margins.bottom = 0.5
+ws.print_options.horizontalCentered = True
+
 wb.save("Workforce Plan Template.xlsx")
 print("saved, data rows", ex_row, "..", data_last_row, "sum row", sum_row)
