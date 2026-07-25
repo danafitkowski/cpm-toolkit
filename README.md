@@ -1,7 +1,7 @@
 # CPM Toolkit
 
 A small, static, self-contained website: a free client-side XER health-check
-tool plus three digital products (templates and a reference sheet) for P6
+tool plus six digital products (templates and a reference sheet) for P6
 schedulers and planners.
 
 Deliberately separate from any Critical Path Partners branding.
@@ -12,10 +12,12 @@ Deliberately separate from any Critical Path Partners branding.
 - `vendor/lens-parser/` — a vendored subset of the MIT-licensed
   [cpp-lens-parser](https://github.com/danafitkowski/cpp-lens-parser), used to
   parse `.xer` files entirely client-side. See `vendor/lens-parser/LICENSE`.
-- `products/` — the source for the three sellable digital products
-  (`build_lookahead.py`, `build_checklist.py`, `build_cheatsheet.py` generate
-  the `.xlsx`/`.pdf` files sold on the site; the generated files themselves
-  are also committed here so they can be uploaded straight to a storefront).
+- `products/` — the source for the six sellable digital products. Each
+  `build_*.py` generates the `.xlsx`/`.pdf` sold on the site; the generated
+  files are committed here too so they can be uploaded straight to a
+  storefront. `_excel_com_test.py` opens every workbook in real Excel via COM
+  and scans for formula errors.
+- `checkout-links.js` — the one file to edit when checkout goes live.
 
 ## Running locally
 
@@ -29,7 +31,11 @@ Then open `http://localhost:8420`.
 
 ## Status
 
-Checkout is not wired up yet. The three product cards are disabled
-("Checkout coming soon") until a Lemon Squeezy (or similar) store exists and
-its buy-links are pasted into `index.html`. See the three `<button class="btn
-btn-outline" disabled>` elements.
+Checkout is not wired up yet. All six product cards show "Checkout coming
+soon" until a storefront exists.
+
+To switch checkout on, paste the buy links into `checkout-links.js`, one per
+product key. Any platform works (Gumroad, Payhip, Lemon Squeezy, a plain
+Stripe payment link) because the site only ever needs a URL. Each product
+whose link is filled in automatically loses its "Launching soon" badge and
+gets a working "Buy now" button; products left as `null` are untouched.
