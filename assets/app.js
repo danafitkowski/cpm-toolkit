@@ -6,8 +6,64 @@ import {
   durationHoursToDays,
 } from '../vendor/lens-parser/index.js';
 
+// A small, entirely made-up 15-activity schedule (no real project, no client
+// data) used only for the "try a sample" button, so a visitor without their
+// own XER handy can still see what the tool finds. Deliberately mixes clean
+// and flagged items across most categories.
+// Real, working P6 calendar-data blobs (5-day and 6-day, each with a small
+// holiday-exceptions block), copied verbatim from an actual P6 export rather
+// than hand-written, since the nested-paren grammar is proprietary and a
+// hand-rolled guess parsed as "unparsed" work days on the first attempt.
+const CAL_5DAY = '(0||CalendarData()((0||DaysOfWeek()((0||1()())(0||2()((0||0(s|08:00|f|16:00)())))(0||3()((0||0(s|08:00|f|16:00)())))(0||4()((0||0(s|08:00|f|16:00)())))(0||5()((0||0(s|08:00|f|16:00)())))(0||6()((0||0(s|08:00|f|16:00)())))(0||7()())))(0||Exceptions()((0||0(d|46192)())(0||0(d|46206)())(0||0(d|46272)())))))';
+const CAL_6DAY = '(0||CalendarData()((0||DaysOfWeek()((0||1()())(0||2()((0||0(s|08:00|f|16:00)())))(0||3()((0||0(s|08:00|f|16:00)())))(0||4()((0||0(s|08:00|f|16:00)())))(0||5()((0||0(s|08:00|f|16:00)())))(0||6()((0||0(s|08:00|f|16:00)())))(0||7()((0||0(s|08:00|f|16:00)())))))(0||Exceptions()((0||0(d|46192)())(0||0(d|46206)())(0||0(d|46272)())))))';
+const SAMPLE_XER = [
+  'ERMHDR\t18.8\t2026-07-24\tProject\tsample\tSample Data\tdb\tPM\tCAD',
+  '%T\tPROJECT',
+  '%F\tproj_id\tproj_short_name\tplan_start_date\tlast_recalc_date',
+  '%R\t1\tSAMPLE-SCHOOL\t2026-06-01\t2026-07-24 08:00',
+  '%T\tCALENDAR',
+  '%F\tclndr_id\tclndr_name\tday_hr_cnt\tweek_hr_cnt\tclndr_data',
+  `%R\t1\t5 Day Standard\t8\t40\t${CAL_5DAY}`,
+  `%R\t2\t6 Day Accelerated\t8\t48\t${CAL_6DAY}`,
+  '%T\tTASK',
+  '%F\ttask_id\ttask_code\ttask_name\ttask_type\tstatus_code\ttarget_drtn_hr_cnt\ttotal_float_hr_cnt\tcstr_type\tcstr_date\tclndr_id\tact_start_date\tact_end_date',
+  '%R\t1\tA1000\tProject Start\tTT_Mile\tTK_Complete\t0\t0\t\t\t1\t2026-06-01\t2026-06-01',
+  '%R\t2\tA1010\tMobilize site\tTT_Task\tTK_Complete\t40\t0\t\t\t1\t2026-06-02\t',
+  '%R\t3\tA1020\tExcavate foundations\tTT_Task\tTK_Active\t120\t0\t\t\t1\t\t',
+  '%R\t4\tA1030\tForm and pour footings\tTT_Task\tTK_NotStarted\t80\t0\t\t\t2\t\t',
+  '%R\t5\tA1040\tBackfill\tTT_Task\tTK_NotStarted\t40\t0\t\t\t1\t\t',
+  '%R\t6\tA1050\tUnderground utilities rough-in\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
+  '%R\t7\tA1060\tStructural steel erection\tTT_Task\tTK_NotStarted\t480\t0\t\t\t1\t\t',
+  '%R\t8\tA1070\tRoofing\tTT_Task\tTK_NotStarted\t120\t0\tCS_MEO\t2027-01-15\t1\t\t',
+  '%R\t9\tA1080\tExterior envelope\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
+  '%R\t10\tA1090\tMEP rough-in\tTT_Task\tTK_NotStarted\t200\t0\t\t\t1\t\t',
+  '%R\t11\tA1100\tDrywall and finishes\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
+  '%R\t12\tA1110\tInspections\tTT_Task\tTK_NotStarted\t40\t-40\t\t\t1\t\t',
+  '%R\t13\tA1120\tPunch list\tTT_Task\tTK_NotStarted\t80\t0\t\t\t1\t\t',
+  '%R\t14\tA1130\tSubstantial completion\tTT_FinMile\tTK_NotStarted\t0\t0\t\t\t1\t\t',
+  '%R\t15\tA1140\tSite landscaping\tTT_Task\tTK_NotStarted\t80\t0\t\t\t1\t\t',
+  '%T\tTASKPRED',
+  '%F\ttask_id\tpred_task_id\tpred_type\tlag_hr_cnt',
+  '%R\t2\t1\tPR_FS\t0',
+  '%R\t3\t2\tPR_FS\t0',
+  '%R\t4\t3\tPR_FS\t0',
+  '%R\t5\t4\tPR_FS\t24',
+  '%R\t7\t5\tPR_FS\t0',
+  '%R\t8\t7\tPR_FS\t0',
+  '%R\t9\t8\tPR_FS\t-40',
+  '%R\t10\t7\tPR_FS\t0',
+  '%R\t10\t6\tPR_FS\t0',
+  '%R\t11\t9\tPR_FS\t0',
+  '%R\t11\t10\tPR_FS\t0',
+  '%R\t12\t11\tPR_FS\t0',
+  '%R\t13\t12\tPR_FS\t0',
+  '%R\t14\t13\tPR_FS\t0',
+  '',
+].join('\n');
+
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
+const sampleBtn = document.getElementById('try-sample-btn');
 const results = document.getElementById('results');
 const errorBox = document.getElementById('tool-error');
 
@@ -25,6 +81,16 @@ dropZone.addEventListener('drop', (e) => {
 fileInput.addEventListener('change', () => {
   if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
 });
+sampleBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  errorBox.hidden = true;
+  try {
+    processXerText(SAMPLE_XER, 'sample-elementary-school.xer (made up, not a real project)');
+  } catch (err) {
+    console.error(err);
+    showError('Could not process the sample. Please refresh and try again.');
+  }
+});
 
 async function handleFile(file) {
   errorBox.hidden = true;
@@ -38,13 +104,20 @@ async function handleFile(file) {
   try {
     const buf = await file.arrayBuffer();
     const text = decodeXerBuffer(buf);
-    const model = parseXer(text, { filename: file.name });
-    const report = buildReport(model, file);
-    renderReport(report);
+    processXerText(text, file.name);
   } catch (err) {
     console.error(err);
     showError('Could not read that file. It may not be a standard P6 XER export. Nothing was uploaded anywhere: this all ran in your browser.');
   }
+}
+
+function processXerText(text, filename) {
+  errorBox.hidden = true;
+  results.hidden = true;
+  results.innerHTML = '';
+  const model = parseXer(text, { filename });
+  const report = buildReport(model, { name: filename });
+  renderReport(report);
 }
 
 function showError(msg) {
