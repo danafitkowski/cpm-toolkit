@@ -299,3 +299,26 @@ function escapeHtml(s) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[c]));
 }
+
+// Reads window.CHECKOUT_LINKS (set in checkout-links.js) and turns on any
+// product card whose link is filled in: removes the "Launching soon" badge
+// and swaps the disabled button for a real link to checkout. A product left
+// as null in checkout-links.js is untouched.
+(function enableCheckoutLinks() {
+  const links = window.CHECKOUT_LINKS || {};
+  document.querySelectorAll('[data-product]').forEach((card) => {
+    const url = links[card.dataset.product];
+    if (!url) return;
+    const badge = card.querySelector('.badge-soon');
+    if (badge) badge.remove();
+    const btn = card.querySelector('[data-buy-button]');
+    if (!btn) return;
+    const link = document.createElement('a');
+    link.href = url;
+    link.className = btn.className;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'Buy now';
+    btn.replaceWith(link);
+  });
+})();

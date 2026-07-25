@@ -35,6 +35,7 @@
   </div>
 </header>
 
+<main>
 <div id="top" class="hero">
   <div class="wrap">
     <h1>Practical tools for people who live in P6.</h1>
@@ -70,7 +71,7 @@
     <p class="section-sub">Small, focused files that save an afternoon of rebuilding the same thing from scratch. No subscriptions, no accounts, just a download.</p>
 
     <div class="products">
-      <div class="product-card">
+      <div class="product-card" data-product="lookahead">
         <span class="badge-soon">Launching soon</span>
         <h3>3-Week Lookahead Starter Template</h3>
         <div class="price">$4.99 CAD</div>
@@ -79,10 +80,10 @@
           <li>Excel (.xlsx), fully editable</li>
           <li>No macros, no add-ins required</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-product="checklist">
         <span class="badge-soon">Launching soon</span>
         <h3>Schedule Health Checklist</h3>
         <div class="price">$4.99 CAD</div>
@@ -91,10 +92,10 @@
           <li>Excel (.xlsx), with a status column per item</li>
           <li>DCMA-14-style, in plain language</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-product="cheatsheet">
         <span class="badge-soon">Launching soon</span>
         <h3>XER Field Reference Sheet</h3>
         <div class="price">$4.99 CAD</div>
@@ -102,10 +103,10 @@
         <ul>
           <li>PDF, one page, print-friendly</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-product="histogram">
         <span class="badge-soon">Launching soon</span>
         <h3>Resource Histogram Starter</h3>
         <div class="price">$4.99 CAD</div>
@@ -114,10 +115,10 @@
           <li>Excel (.xlsx), fully editable</li>
           <li>Built-in chart, no add-ins required</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-product="workforce">
         <span class="badge-soon">Launching soon</span>
         <h3>Workforce Plan Template</h3>
         <div class="price">$4.99 CAD</div>
@@ -126,10 +127,10 @@
           <li>Excel (.xlsx), fully editable</li>
           <li>Auto-calculated weeks on site and totals</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-product="riskkit">
         <span class="badge-soon">Launching soon</span>
         <h3>Schedule Risk &amp; Contingency Starter Kit</h3>
         <div class="price">$4.99 CAD</div>
@@ -138,7 +139,7 @@
           <li>Excel (.xlsx), formula-driven</li>
           <li>Ranks which risk items drive the most uncertainty</li>
         </ul>
-        <button class="btn btn-outline" disabled>Checkout coming soon</button>
+        <button class="btn btn-outline" data-buy-button disabled>Checkout coming soon</button>
       </div>
     </div>
   </div>
@@ -172,6 +173,7 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
@@ -182,6 +184,7 @@
   </div>
 </footer>
 
+<script src="checkout-links.js"></script>
 <script type="module" src="assets/app.js"></script>
 </body>
 </html>
