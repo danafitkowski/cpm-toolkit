@@ -161,13 +161,15 @@ function buildReport(model, file) {
   let negativeFloat = 0, longDurations = 0, unknownCalendar = 0, statusFlips = 0;
   const knownCals = new Set(calendars.map(c => c.clndr_id));
   const longList = [];
+  // An activity missing BOTH ends only counts once here (a set of activity
+  // IDs, not a sum), so this can never exceed 100% of activities the way
+  // noPred+noSucc can when an isolated activity is missing both.
+  const openEndIds = new Set();
 
   for (const t of realTasks) {
     const id = t.task_id;
-    const isStartType = t.task_type === 'TT_Mile' && !predecessors[id];
-    if (!predecessors[id] && t.task_type !== 'TT_Mile') noPred++;
-    else if (!predecessors[id] && t.task_type === 'TT_Mile') { /* start milestones legitimately have none */ }
-    if (!successors[id] && !finishMilestoneTypes.has(t.task_type)) noSucc++;
+    if (!predecessors[id] && t.task_type !== 'TT_Mile') { noPred++; openEndIds.add(id); }
+    if (!successors[id] && !finishMilestoneTypes.has(t.task_type)) { noSucc++; openEndIds.add(id); }
 
     if (HARD_CONSTRAINTS.has(t.cstr_type)) hardConstraints++;
     else if (SOFT_CONSTRAINTS.has(t.cstr_type)) softConstraints++;
@@ -217,7 +219,7 @@ function buildReport(model, file) {
     calendarCount: calendars.length,
     calRows,
     checks: [
-      metric('Open ends', noPred + noSucc, pct(noPred + noSucc), 5,
+      metric('Open ends', openEndIds.size, pct(openEndIds.size), 5,
         `${noPred} activities with no predecessor, ${noSucc} with no successor (excluding start/finish milestones).`),
       metric('Hard constraints', hardConstraints, pct(hardConstraints), 5,
         `Activities with a fixed date lock (Mandatory or "On" constraint) that can override logic.`),
@@ -244,6 +246,19 @@ function metric(label, count, pctVal, threshold, note) {
 }
 
 function renderReport(r) {
+  if (r.activityCount === 0) {
+    results.hidden = false;
+    results.innerHTML = `
+      <div class="report-head">
+        <div>
+          <div class="report-project">No activities found</div>
+          <div class="report-meta">${escapeHtml(r.filename)}</div>
+        </div>
+      </div>
+      <p class="report-disclaimer">This file parsed, but there's no TASK table with any activities in it, so there's nothing to check. That usually means it isn't a standard P6 XER export, or it's a schedule with genuinely no activities yet. This isn't a "clean" result, it's an empty one.</p>
+    `;
+    return;
+  }
   const flaggedCount = r.checks.filter(c => c.flagged).length;
   const el = document.createElement('div');
   el.innerHTML = `
