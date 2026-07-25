@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://danafitkowski.github.io/cpm-toolkit/sitemap.xml
