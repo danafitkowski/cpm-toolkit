@@ -1,7 +1,8 @@
-// Paste your Lemon Squeezy buy links here once your store is live and each
-// product listing exists. Leave a value as null to keep that product's
-// button showing "Checkout coming soon". Nothing else needs to change:
-// index.html and assets/app.js pick this up automatically on page load.
+// Paste your product buy links here once your store is live. Any storefront
+// works (Gumroad, Payhip, Lemon Squeezy, a Stripe payment link); the site
+// only ever needs a URL. Leave a value as null to keep that product's button
+// showing "Checkout coming soon". Nothing else needs to change: index.html
+// and assets/app.js pick this up automatically on page load.
 window.CHECKOUT_LINKS = {
   lookahead: null,   // 3-Week Lookahead Starter Template
   checklist: null,   // Schedule Health Checklist
