@@ -11,15 +11,13 @@ Deliberately separate from any Critical Path Partners branding.
 - `vendor/lens-parser/` — a vendored subset of the MIT-licensed
   [cpp-lens-parser](https://github.com/danafitkowski/cpp-lens-parser), used to
   parse `.xer` files entirely client-side. See `vendor/lens-parser/LICENSE`.
-- `products/` — RETIRED. Six static template products were built here and then
-  audited against Dana's canonical skills in `~/.claude/skills/`; all six came
-  back CONTRADICTS (34 ban violations, 74 divergences), and five of them could
-  not work as static files at all because the canonical tools compute from an
-  XER. They are kept only for reference and must not be sold. See
-  `Downloads/CPM Toolkit - Product Audit vs Canonical Skills - 2026-07-25.html`.
-  The real product is the Lookahead Generator app, built in the separate
-  PRIVATE repo `~/Projects/lookahead-generator`, which wraps the canonical
-  builder unchanged.
+- `products/` — REMOVED from this repo 2026-07-26. Six static template products
+  were built here, then audited against Dana's canonical skills and all six came
+  back CONTRADICTS. Because this repo is public they were downloadable from
+  raw.githubusercontent.com even after being taken off the site, so they were
+  deleted. A local copy is at `Downloads/CPM Toolkit - retired products backup`.
+  Do not re-add them. The real product is the Lookahead Generator app, in the
+  separate PRIVATE repo `~/Projects/lookahead-generator`.
 - `checkout-links.js` — the one file to edit when checkout goes live.
 
 ## Running locally
