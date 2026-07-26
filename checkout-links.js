@@ -1,13 +1,10 @@
-// Paste your product buy links here once your store is live. Any storefront
-// works (Gumroad, Payhip, Lemon Squeezy, a Stripe payment link); the site
-// only ever needs a URL. Leave a value as null to keep that product's button
-// showing "Checkout coming soon". Nothing else needs to change: index.html
-// and assets/app.js pick this up automatically on page load.
+// Paste the product buy link here once the store listing is live. Any storefront
+// works (Gumroad, Payhip, a Stripe payment link); the site only ever needs a URL.
+// Leave it null to keep the button showing "Checkout coming soon". Nothing else
+// needs to change: index.html and assets/app.js pick this up on page load.
+//
+// The key must match the data-product attribute on the product block in
+// index.html.
 window.CHECKOUT_LINKS = {
-  lookahead: null,   // 3-Week Lookahead Starter Template
-  checklist: null,   // Schedule Health Checklist
-  cheatsheet: null,  // XER Field Reference Sheet
-  histogram: null,   // Resource Histogram Starter
-  workforce: null,   // Workforce Plan Template
-  riskkit: null,     // Schedule Risk & Contingency Starter Kit
+  'lookahead-app': null,   // Lookahead Generator for Primavera P6, $19.99 CAD
 };
