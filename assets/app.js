@@ -30,18 +30,18 @@ const SAMPLE_XER = [
   '%R\t1\tA1000\tProject Start\tTT_Mile\tTK_Complete\t0\t0\t\t\t1\t2026-06-01\t2026-06-01',
   '%R\t2\tA1010\tMobilize site\tTT_Task\tTK_Complete\t40\t0\t\t\t1\t2026-06-02\t',
   '%R\t3\tA1020\tExcavate foundations\tTT_Task\tTK_Active\t120\t0\t\t\t1\t\t',
-  '%R\t4\tA1030\tForm and pour footings\tTT_Task\tTK_NotStarted\t80\t0\t\t\t2\t\t',
-  '%R\t5\tA1040\tBackfill\tTT_Task\tTK_NotStarted\t40\t0\t\t\t1\t\t',
-  '%R\t6\tA1050\tUnderground utilities rough-in\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
-  '%R\t7\tA1060\tStructural steel erection\tTT_Task\tTK_NotStarted\t480\t0\t\t\t1\t\t',
-  '%R\t8\tA1070\tRoofing\tTT_Task\tTK_NotStarted\t120\t0\tCS_MEO\t2027-01-15\t1\t\t',
-  '%R\t9\tA1080\tExterior envelope\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
-  '%R\t10\tA1090\tMEP rough-in\tTT_Task\tTK_NotStarted\t200\t0\t\t\t1\t\t',
-  '%R\t11\tA1100\tDrywall and finishes\tTT_Task\tTK_NotStarted\t160\t0\t\t\t1\t\t',
-  '%R\t12\tA1110\tInspections\tTT_Task\tTK_NotStarted\t40\t-40\t\t\t1\t\t',
-  '%R\t13\tA1120\tPunch list\tTT_Task\tTK_NotStarted\t80\t0\t\t\t1\t\t',
-  '%R\t14\tA1130\tSubstantial completion\tTT_FinMile\tTK_NotStarted\t0\t0\t\t\t1\t\t',
-  '%R\t15\tA1140\tSite landscaping\tTT_Task\tTK_NotStarted\t80\t0\t\t\t1\t\t',
+  '%R\t4\tA1030\tForm and pour footings\tTT_Task\tTK_NotStart\t80\t0\t\t\t2\t\t',
+  '%R\t5\tA1040\tBackfill\tTT_Task\tTK_NotStart\t40\t0\t\t\t1\t\t',
+  '%R\t6\tA1050\tUnderground utilities rough-in\tTT_Task\tTK_NotStart\t160\t0\t\t\t1\t\t',
+  '%R\t7\tA1060\tStructural steel erection\tTT_Task\tTK_NotStart\t480\t0\t\t\t1\t\t',
+  '%R\t8\tA1070\tRoofing\tTT_Task\tTK_NotStart\t120\t0\tCS_MEO\t2027-01-15\t1\t\t',
+  '%R\t9\tA1080\tExterior envelope\tTT_Task\tTK_NotStart\t160\t0\t\t\t1\t\t',
+  '%R\t10\tA1090\tMEP rough-in\tTT_Task\tTK_NotStart\t200\t0\t\t\t1\t\t',
+  '%R\t11\tA1100\tDrywall and finishes\tTT_Task\tTK_NotStart\t160\t0\t\t\t1\t\t',
+  '%R\t12\tA1110\tInspections\tTT_Task\tTK_NotStart\t40\t-40\t\t\t1\t\t',
+  '%R\t13\tA1120\tPunch list\tTT_Task\tTK_NotStart\t80\t0\t\t\t1\t\t',
+  '%R\t14\tA1130\tSubstantial completion\tTT_FinMile\tTK_NotStart\t0\t0\t\t\t1\t\t',
+  '%R\t15\tA1140\tSite landscaping\tTT_Task\tTK_NotStart\t80\t0\t\t\t1\t\t',
   '%T\tTASKPRED',
   '%F\ttask_id\tpred_task_id\tpred_type\tlag_hr_cnt',
   '%R\t2\t1\tPR_FS\t0',
@@ -142,6 +142,17 @@ function decodeXerBuffer(buf) {
   }
 }
 
+// P6's actual status_code values, verified by counting them across 12 real XER
+// exports: 2,169 not-started, 28 active, 15 complete, and no other value.
+//
+// Mind the spelling. The not-started code ends in "Start", with no trailing
+// "ed". An earlier version of this file tested against a spelling with the
+// "ed" on the end, which matches nothing in a real export, so the status and
+// date mismatch check silently reported zero on every schedule ever dropped
+// into it. Keep these as named constants so the literal appears exactly once.
+const STATUS_NOT_STARTED = 'TK_NotStart';
+const STATUS_COMPLETE = 'TK_Complete';
+
 const HARD_CONSTRAINTS = new Set(['CS_MSO', 'CS_MEO', 'CS_MANDSTART', 'CS_MANDFIN']);
 const SOFT_CONSTRAINTS = new Set(['CS_MSOA', 'CS_MSOB', 'CS_MEOA', 'CS_MEOB', 'CS_ALAP']);
 
@@ -186,8 +197,8 @@ function buildReport(model, file) {
       longList.push({ code: t.task_code, name: t.task_name, days });
     }
 
-    if (t.status_code === 'TK_NotStarted' && t.act_start_date) statusFlips++;
-    if (t.status_code === 'TK_Complete' && !t.act_end_date) statusFlips++;
+    if (t.status_code === STATUS_NOT_STARTED && t.act_start_date) statusFlips++;
+    if (t.status_code === STATUS_COMPLETE && !t.act_end_date) statusFlips++;
   }
 
   let leads = 0, nonFS = 0;
