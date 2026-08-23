@@ -1,7 +1,8 @@
 # CPM Toolkit
 
 A small, static, self-contained website: a free client-side XER health-check
-tool, plus the storefront for the Lookahead Generator desktop app.
+tool, plus the storefront for the Lookahead Generator desktop app and four
+$4.99 worksheets and references.
 
 Deliberately separate from any Critical Path Partners branding.
 
@@ -16,9 +17,14 @@ Deliberately separate from any Critical Path Partners branding.
   back CONTRADICTS. Because this repo is public they were downloadable from
   raw.githubusercontent.com even after being taken off the site, so they were
   deleted. A local copy is at `Downloads/CPM Toolkit - retired products backup`.
-  Do not re-add them. The real product is the Lookahead Generator app, in the
-  separate PRIVATE repo `~/Projects/lookahead-generator`.
-- `checkout-links.js` — the one file to edit when checkout goes live.
+  Do not re-add product FILES to this repo, ever: the storefront (Gumroad)
+  hosts the files. On 2026-08-23 four replacements were rebuilt correctly from
+  the canonical skills and adversarially re-audited; their build scripts and
+  outputs live in the separate PRIVATE local repo
+  `~/Projects/cpm-toolkit-products`. The app is in the separate PRIVATE repo
+  `~/Projects/lookahead-generator`.
+- `checkout-links.js` — the one file to edit when checkout goes live
+  (five keys: the app plus four worksheets).
 
 ## Running locally
 
