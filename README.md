@@ -1,7 +1,8 @@
 # CPM Toolkit
 
 A small, static, self-contained website: a free client-side XER health-check
-tool, plus the storefront for the Lookahead Generator desktop app.
+tool, plus the storefront for the Lookahead Generator desktop app and four
+$4.99 worksheets and references.
 
 Deliberately separate from any Critical Path Partners branding.
 
@@ -15,7 +16,8 @@ Deliberately separate from any Critical Path Partners branding.
   (Gumroad), not from this repo. Do not add product files here: anything in a
   public repo can be downloaded from raw.githubusercontent.com, even after it
   is taken off the site.
-- `checkout-links.js` — the one file to edit when checkout goes live.
+- `checkout-links.js` — the one file to edit when checkout goes live
+  (five keys: the app plus four worksheets).
 
 ## Running locally
 

@@ -159,7 +159,8 @@ ul.hero-specs li::before {
 }
 .hero-side .btn { display: block; text-align: center; }
 
-/* ---- products (legacy multi-card grid, unused while one product ships) ---- */
+/* ---- products: worksheet card grid below the app hero ---- */
+.products-sub { margin-top: 48px; }
 .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
 .product-card {
   border: 1px solid var(--line); border-radius: var(--radius); padding: 24px;
