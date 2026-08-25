@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | CPM Toolkit</title>
+<meta name="description" content="Send a message about the free XER health check, the Lookahead Generator app, or any of the CPM Toolkit worksheets.">
+<link rel="canonical" href="https://danafitkowski.github.io/cpm-toolkit/contact.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | CPM Toolkit">
+<meta property="og:description" content="Send a message about the free XER health check, the Lookahead Generator app, or any of the CPM Toolkit worksheets.">
+<meta property="og:url" content="https://danafitkowski.github.io/cpm-toolkit/contact.html">
+<meta property="og:image" content="https://danafitkowski.github.io/cpm-toolkit/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact | CPM Toolkit">
+<meta name="twitter:description" content="Send a message about the free XER health check, the Lookahead Generator app, or any of the CPM Toolkit worksheets.">
+<meta name="twitter:image" content="https://danafitkowski.github.io/cpm-toolkit/assets/og-image.png">
+
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .form-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); padding: 28px 30px; max-width: 620px;
+  }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-weight: 600; font-size: 0.94rem; margin-bottom: 6px; }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field textarea {
+    width: 100%; font: inherit; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 10px 12px;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  }
+  .field textarea { min-height: 170px; resize: vertical; }
+  /* One h1 per page. Matches the h2 rule in style.css so the look is unchanged. */
+  #contact h1 { font-size: 1.6rem; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-card .privacy-note { align-items: flex-start; margin: 0 0 20px; }
+  .form-actions { margin-top: 4px; }
+  .form-actions .btn { border: 1px solid var(--accent-dark); }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">CPM<span>Toolkit</span></a>
+    <nav>
+      <a href="index.html#tool">Free tool</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="contact">
+  <div class="wrap">
+    <h1>Contact</h1>
+    <p class="section-sub">Questions about the free health check, the Lookahead Generator app, or any of the worksheets. Problems with a download or an order go here too. Include the order number from your receipt email and it gets sorted faster.</p>
+
+    <div class="form-card">
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="3b9646f1-4255-4fc0-8043-09f178d998bd">
+        <input type="hidden" name="subject" value="New message from CPM Toolkit">
+        <input type="hidden" name="from_name" value="CPM Toolkit website">
+        <input type="hidden" name="redirect" value="https://danafitkowski.github.io/cpm-toolkit/thank-you.html">
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <div class="hp-field" aria-hidden="true">
+          <label for="botcheck">Leave this field empty</label>
+          <input type="text" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="privacy-note">This form posts to Web3Forms (api.web3forms.com), a third-party form service that delivers the message by email. Your name, email and message pass through it and are used only to send you a reply. Nothing else is collected: no cookies, no analytics, no tracking.</div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-outline">Send message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div>CPM Toolkit</div>
+      <div><a href="index.html">Back to the site</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

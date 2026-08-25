@@ -2,8 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://danafitkowski.github.io/cpm-toolkit/</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://danafitkowski.github.io/cpm-toolkit/contact.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
+<!-- thank-you.html is deliberately absent: it is the contact form's
+     confirmation redirect, and it carries a noindex robots tag. -->
+
