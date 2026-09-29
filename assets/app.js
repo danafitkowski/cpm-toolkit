@@ -5,6 +5,7 @@ import {
   getCalendarMap,
   durationHoursToDays,
 } from '../vendor/lens-parser/index.js';
+import { undecodedCalendars, calendarNotice } from './calendar-notice.js';
 
 // A small, entirely made-up 15-activity schedule (no real project, no client
 // data) used only for the "try a sample" button, so a visitor without their
@@ -283,6 +284,9 @@ function buildReport(model, file) {
       holidays: (info.holidays || []).length,
     };
   });
+  // Calendars whose work week the parser could not read are named under the
+  // table, not left as an unexplained "unparsed" (see calendar-notice.js).
+  const calNotice = calendarNotice(undecodedCalendars(calendars, calMap));
 
   // Longest first, so the table titled "longest" leads with the longest one.
   // Ties break on activity code to keep the order stable between runs.
@@ -298,6 +302,7 @@ function buildReport(model, file) {
     excludedCount,
     calendarCount: calendars.length,
     calRows,
+    calNotice,
     checks: [
       metric('Open ends', openEndIds.size, actPct(openEndIds.size), 'activities', 5,
         `${noPred} with no predecessor, ${noSucc} with no successor. Start milestones are exempt from the predecessor test and finish milestones from the successor test, since each has only one end. An activity missing both ends counts once here.`),
@@ -373,6 +378,7 @@ function renderReport(r) {
           ${r.calRows.map(c => `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(String(c.hoursPerDay ?? ''))}</td><td>${escapeHtml(c.workDays)}</td><td>${c.holidays}</td></tr>`).join('')}
         </tbody>
       </table>
+      ${r.calNotice ? `<p class="cal-note">${escapeHtml(r.calNotice)}</p>` : ''}
     </div>` : ''}
     ${r.longList.length ? `
     <div class="section-label">Activities over 44 working days${r.longList.length > 1 ? `, longest first (all ${r.longList.length} listed)` : ''}</div>

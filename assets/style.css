@@ -126,6 +126,7 @@ h2 { font-size: 1.6rem; margin: 0 0 8px; letter-spacing: -0.01em; }
 table.cal-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 table.cal-table th, table.cal-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
 table.cal-table th { color: var(--ink-soft); font-weight: 600; }
+.cal-note { font-size: 0.85rem; margin: 10px 0 0; padding: 10px 14px; border: 1px solid #fbbf24; border-radius: 8px; background: #fffbeb; }
 
 .report-disclaimer { font-size: 0.85rem; color: var(--ink-soft); margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
 

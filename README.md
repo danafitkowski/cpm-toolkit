@@ -29,6 +29,9 @@ Deliberately separate from any Critical Path Partners branding.
 - `checkout-links.js` — one flag per product saying whether it is on sale
   (five keys: the app plus four worksheets). It holds no URLs. See Checkout
   below.
+- `_tests/` — Node tests for the free check's pure modules, run from the repo
+  root with `node --test` (Node 22, no install). The leading underscore keeps
+  GitHub Pages from publishing them with the site.
 
 ## Running locally
 
